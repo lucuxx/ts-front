@@ -1,87 +1,101 @@
 <template>
   <div class="login">
-    <el-form
-      ref="loginForm"
-      :model="loginForm"
-      :rules="loginRules"
-      class="login-form"
-    >
-      <h3 class="title">{{ title }}</h3>
-      <el-form-item prop="username">
-        <el-input
-          v-model="loginForm.username"
-          type="text"
-          auto-complete="off"
-          placeholder="账号"
-        >
-          <svg-icon
-            slot="prefix"
-            icon-class="user"
-            class="el-input__icon input-icon"
-          />
-        </el-input>
-      </el-form-item>
-      <el-form-item prop="password">
-        <el-input
-          v-model="loginForm.password"
-          type="password"
-          auto-complete="off"
-          placeholder="密码"
-          @keyup.enter.native="handleLogin"
-        >
-          <svg-icon
-            slot="prefix"
-            icon-class="password"
-            class="el-input__icon input-icon"
-          />
-        </el-input>
-      </el-form-item>
-      <el-form-item prop="code" v-if="captchaEnabled">
-        <el-input
-          v-model="loginForm.code"
-          auto-complete="off"
-          placeholder="验证码"
-          style="width: 63%"
-          @keyup.enter.native="handleLogin"
-        >
-          <svg-icon
-            slot="prefix"
-            icon-class="validCode"
-            class="el-input__icon input-icon"
-          />
-        </el-input>
-        <div class="login-code">
-          <img :src="codeUrl" @click="getCode" class="login-code-img" />
-        </div>
-      </el-form-item>
-      <el-checkbox
-        v-model="loginForm.rememberMe"
-        style="margin: 0px 0px 25px 0px"
-        >记住密码</el-checkbox
-      >
-      <el-form-item style="width: 100%">
-        <el-button
-          :loading="loading"
-          size="medium"
-          type="primary"
-          style="width: 100%"
-          @click.native.prevent="handleLogin"
-        >
-          <span v-if="!loading">登 录</span>
-          <span v-else>登 录 中...</span>
-        </el-button>
-        <div style="float: right" v-if="register">
-          <router-link class="link-type" :to="'/register'"
-            >立即注册</router-link
-          >
-        </div>
-        <div class="footer-bar">技术支持，润联科技</div>
-      </el-form-item>
-    </el-form>
-    <!--  底部  -->
-    <!-- <div class="el-login-footer">
+    <div class="content">
+      <el-row type="flex" justify="space-between">
+        <el-col :span="12">
+          <div class="content-left">
+            <div class="content-banner"></div>
+          </div>
+        </el-col>
+        <el-col :span="12">
+          <div class="content-right">
+            <el-form
+              ref="loginForm"
+              :model="loginForm"
+              :rules="loginRules"
+              class="login-form"
+            >
+              <h3 class="title">{{ title }}</h3>
+              <el-form-item prop="username">
+                <el-input
+                  v-model="loginForm.username"
+                  type="text"
+                  auto-complete="off"
+                  placeholder="账号"
+                >
+                  <svg-icon
+                    slot="prefix"
+                    icon-class="user"
+                    class="el-input__icon input-icon"
+                  />
+                </el-input>
+              </el-form-item>
+              <el-form-item prop="password">
+                <el-input
+                  v-model="loginForm.password"
+                  type="password"
+                  auto-complete="off"
+                  placeholder="密码"
+                  @keyup.enter.native="handleLogin"
+                >
+                  <svg-icon
+                    slot="prefix"
+                    icon-class="password"
+                    class="el-input__icon input-icon"
+                  />
+                </el-input>
+              </el-form-item>
+              <el-form-item prop="code" v-if="captchaEnabled">
+                <el-input
+                  v-model="loginForm.code"
+                  auto-complete="off"
+                  placeholder="验证码"
+                  style="width: 63%"
+                  @keyup.enter.native="handleLogin"
+                >
+                  <svg-icon
+                    slot="prefix"
+                    icon-class="validCode"
+                    class="el-input__icon input-icon"
+                  />
+                </el-input>
+                <div class="login-code">
+                  <img :src="codeUrl" @click="getCode" class="login-code-img" />
+                </div>
+              </el-form-item>
+              <el-checkbox
+                v-model="loginForm.rememberMe"
+                style="margin: 0px 0px 25px 0px"
+                >记住密码</el-checkbox
+              >
+              <el-form-item style="width: 100%">
+                <el-button
+                  :loading="loading"
+                  size="medium"
+                  type="primary"
+                  style="width: 100%"
+                  @click.native.prevent="handleLogin"
+                >
+                  <span v-if="!loading">登 录</span>
+                  <span v-else>登 录 中...</span>
+                </el-button>
+                <div style="float: right" v-if="register">
+                  <router-link class="link-type" :to="'/register'"
+                    >立即注册</router-link
+                  >
+                </div>
+                <div class="footer-bar">技术支持，润联科技</div>
+              </el-form-item>
+            </el-form>
+          </div>
+        </el-col>
+      </el-row>
+
+      <!--  底部  -->
+      <!-- <div class="el-login-footer">
       <span>Copyright © 2018-2022 润联科技 All Rights Reserved.</span>
     </div> -->
+    </div>
   </div>
 </template>
 
@@ -191,27 +205,60 @@ export default {
 };
 </script>
 
-<style rel="stylesheet/scss" lang="scss">
+<style lang="scss" scoped>
 .login {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
-  background-image: url("../assets/images/logo_bg.jpg");
+  // background-image: url("../assets/images/logo_bg.jpg");
+  background-image: url("../assets/images/login-bg.webp");
   background-size: cover;
   background-position: center;
 }
+
 .title {
   margin: 0px auto 30px auto;
   text-align: center;
   color: #707070;
   font-weight: 600;
 }
+.content {
+  width: 40vw;
+  min-width: 700px;
+  height: 420px;
+  // min-height: 400px;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px -2px #00000029, 0 3px 6px #0000001f,
+    0 5px 12px 4px #00000017;
+  background-color: #fff;
+}
+
+.content-left {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .content-banner {
+    height: 80%;
+    width: 80%;
+    background-image: url("../assets/images/login-banner.webp");
+    background-size: cover;
+    background-position: center;
+  }
+}
+
+.content-right {
+  width: 100%;
+  height: 100%;
+}
 
 .login-form {
   border-radius: 6px;
   background: #ffffff;
-  width: 400px;
+  width: 100%;
+  height: 100%;
   padding: 25px 25px 5px 25px;
   .el-input {
     height: 38px;
