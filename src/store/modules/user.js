@@ -33,18 +33,17 @@ const user = {
 
   actions: {
     // 登录
-    Login({ commit }, userInfo) {
+    Login ({ commit }, userInfo) {
       const username = userInfo.username.trim()
       const password = userInfo.password
       const code = userInfo.code
       const uuid = userInfo.uuid
       return new Promise((resolve, reject) => {
         login(username, password, code, uuid).then(res => {
-          let data = res.data
-          setToken(data.access_token)
-          commit('SET_TOKEN', data.access_token)
-          setExpiresIn(data.expires_in)
-          commit('SET_EXPIRES_IN', data.expires_in)
+          setToken(res.token)
+          commit('SET_TOKEN', res.token)
+          // setExpiresIn(data.expires_in)
+          // commit('SET_EXPIRES_IN', data.expires_in)
           resolve()
         }).catch(error => {
           reject(error)
@@ -53,7 +52,7 @@ const user = {
     },
 
     // 获取用户信息
-    GetInfo({ commit, state }) {
+    GetInfo ({ commit, state }) {
       return new Promise((resolve, reject) => {
         getInfo().then(res => {
           const user = res.user
@@ -74,7 +73,7 @@ const user = {
     },
 
     // 刷新token
-    RefreshToken({commit, state}) {
+    RefreshToken ({ commit, state }) {
       return new Promise((resolve, reject) => {
         refreshToken(state.token).then(res => {
           setExpiresIn(res.data)
@@ -85,9 +84,9 @@ const user = {
         })
       })
     },
-    
+
     // 退出系统
-    LogOut({ commit, state }) {
+    LogOut ({ commit, state }) {
       return new Promise((resolve, reject) => {
         logout(state.token).then(() => {
           commit('SET_TOKEN', '')
@@ -102,7 +101,7 @@ const user = {
     },
 
     // 前端 登出
-    FedLogOut({ commit }) {
+    FedLogOut ({ commit }) {
       return new Promise(resolve => {
         commit('SET_TOKEN', '')
         removeToken()

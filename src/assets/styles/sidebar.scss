@@ -44,15 +44,16 @@
       right: 0px;
     }
 
-    .el-scrollbar {
-      height: 100%;
-    }
 
-    &.has-logo {
+    // .el-scrollbar{
+    //   height: calc(100vh);
+    // }
+
+    // &.has-logo {
       .el-scrollbar {
-        height: calc(100% - 60px);
+        height: calc(100vh - 60px);
       }
-    }
+    // }
 
     .is-horizontal {
       display: none;
@@ -174,6 +175,8 @@
       width: 54px !important;
     }
 
+
+
     .main-container {
       margin-left: 54px;
     }
@@ -233,6 +236,9 @@
       transition: transform .28s;
       width: $base-sidebar-width !important;
       top:0px !important;
+      .el-scrollbar{
+        height: calc(100vh) !important;
+      }
     }
 
     &.hideSidebar {
@@ -240,8 +246,12 @@
         pointer-events: none;
         transition-duration: 0.3s;
         transform: translate3d(-$base-sidebar-width, 0, 0);
-
+        .el-scrollbar{
+          height: calc(100vh) !important;
+        }
       }
+
+
     }
   }
 

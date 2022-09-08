@@ -8,7 +8,7 @@
           : variables.menuLightBackground,
     }"
   >
-    <logo v-if="showLogo" :collapse="isCollapse" />
+    <!-- <logo v-if="showLogo" :collapse="isCollapse" /> -->
     <el-scrollbar :class="settings.sideTheme" wrap-class="scrollbar-wrapper">
       <el-menu
         :default-active="activeMenu"
