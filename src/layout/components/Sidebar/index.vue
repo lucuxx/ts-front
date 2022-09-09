@@ -9,7 +9,11 @@
     }"
   >
     <!-- <logo v-if="showLogo" :collapse="isCollapse" /> -->
-    <el-scrollbar :class="settings.sideTheme" wrap-class="scrollbar-wrapper">
+    <el-scrollbar
+      :class="settings.sideTheme"
+      wrap-class="scrollbar-wrapper"
+      :key="sidebarRouters[0].path"
+    >
       <el-menu
         :default-active="activeMenu"
         :collapse="isCollapse"

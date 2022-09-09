@@ -183,33 +183,47 @@ export const dynamicRoutes = [
     ]
   },
   {
-    path: '/equipment',
+    path: '/project',
     component: Layout,
     hidden: true,
-    permissions: ['device:product:detail'],
+    permissions: ['project:detail:index'],
     children: [
       {
-        path: 'device/product/detail/:id(\\d+)',
-        component: () => import('@/views/equipment/device/product-detail'),
-        name: 'ProductDetail',
-        meta: { title: '产品详情', activeMenu: '/equipment/device/product' }
+        path: 'detail/:id(\\d+)',
+        component: () => import('@/views/project/detail'),
+        name: 'ProjectDetail',
+        meta: { title: '项目详情', activeMenu: '/project/manage' }
       }
     ]
   },
-  {
-    path: '/equipment',
-    component: Layout,
-    hidden: true,
-    permissions: ['instance:installations:detail'],
-    children: [
-      {
-        path: 'instance/installations/detail/:id(\\d+)',
-        component: () => import('@/views/equipment/instance/instance-detail'),
-        name: 'InstanceDetail',
-        meta: { title: '设备详情', activeMenu: '/equipment/instance/installations' }
-      }
-    ]
-  },
+  // {
+  //   path: '/equipment',
+  //   component: Layout,
+  //   hidden: true,
+  //   permissions: ['device:product:detail'],
+  //   children: [
+  //     {
+  //       path: 'device/product/detail/:id(\\d+)',
+  //       component: () => import('@/views/equipment/device/product-detail'),
+  //       name: 'ProductDetail',
+  //       meta: { title: '产品详情', activeMenu: '/equipment/device/product' }
+  //     }
+  //   ]
+  // },
+  // {
+  //   path: '/equipment',
+  //   component: Layout,
+  //   hidden: true,
+  //   permissions: ['instance:installations:detail'],
+  //   children: [
+  //     {
+  //       path: 'instance/installations/detail/:id(\\d+)',
+  //       component: () => import('@/views/equipment/instance/instance-detail'),
+  //       name: 'InstanceDetail',
+  //       meta: { title: '设备详情', activeMenu: '/equipment/instance/installations' }
+  //     }
+  //   ]
+  // },
 ]
 
 // 防止连续点击多次路由报错

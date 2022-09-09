@@ -84,9 +84,10 @@ export default {
   },
   methods: {
     handleSizeChange(val) {
-      if (this.currentPage * val > this.total) {
-        this.currentPage = 1;
-      }
+      // if (this.currentPage * val > this.total) {
+      //   this.currentPage = 1;
+      // }
+      this.currentPage = 1;
       this.$emit("pagination", { page: this.currentPage, limit: val });
       if (this.autoScroll) {
         scrollTo(0, 800);

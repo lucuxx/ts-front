@@ -44,14 +44,13 @@
       right: 0px;
     }
 
-
-    // .el-scrollbar{
-    //   height: calc(100vh);
-    // }
+    .el-scrollbar {
+      height: 100%;
+    }
 
     // &.has-logo {
       .el-scrollbar {
-        height: calc(100vh - 60px);
+        height: calc(100% - 60px);
       }
     // }
 
@@ -152,6 +151,8 @@
         // // background-color: $g-sub-sidebar-menu-hover-bg !important;
         // color: $base-menu-color-active !important;
         // background-color:  $base-menu-background-active !important;
+        background-color:  $base-sub-menu-hover !important;
+
       }
     }
     .el-menu-item.is-active,
@@ -174,8 +175,6 @@
     .sidebar-container {
       width: 54px !important;
     }
-
-
 
     .main-container {
       margin-left: 54px;
@@ -237,7 +236,7 @@
       width: $base-sidebar-width !important;
       top:0px !important;
       .el-scrollbar{
-        height: calc(100vh) !important;
+        height: 100vh !important
       }
     }
 
@@ -247,11 +246,9 @@
         transition-duration: 0.3s;
         transform: translate3d(-$base-sidebar-width, 0, 0);
         .el-scrollbar{
-          height: calc(100vh) !important;
+          height: 100vh !important
         }
       }
-
-
     }
   }
 
@@ -276,8 +273,8 @@
   .el-menu-item {
     &:hover {
       // you can use $subMenuHover
-      background-color: rgba(0, 0, 0, 0.06) !important;
-      // background-color:  $base-sub-menu-hover !important;
+      // background-color: rgba(0, 0, 0, 0.06) !important;
+      background-color:  $base-sub-menu-hover !important;
     }
   }
 
@@ -300,5 +297,3 @@
     }
   }
 }
-
-

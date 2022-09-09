@@ -128,7 +128,7 @@ export default {
   methods: {
     // 根据宽度计算设置显示栏数
     setVisibleNumber() {
-      const width = document.body.getBoundingClientRect().width / 3;
+      const width = document?.body?.getBoundingClientRect().width / 3;
       this.visibleNumber = parseInt(width / 85);
     },
     // 菜单选择事件
@@ -173,7 +173,9 @@ export default {
 @import "~@/assets/styles/variables.scss";
 
 .el-menu {
-  background: #{$base-header-background};
+  // background: #{$base-header-background};
+  background: transparent !important;
+  margin-left: 20px;
 }
 
 .topmenu-container.el-menu--horizontal > .el-menu-item {
@@ -183,20 +185,22 @@ export default {
   color: #fafafa !important;
   padding: 0 5px !important;
   margin: 10px 10px !important;
-  background: #{$base-header-background} !important;
+  // background: #{$base-header-background} !important;
+  background: transparent !important;
 }
 
 .topmenu-container.el-menu--horizontal > .el-menu-item.is-active,
 .el-menu--horizontal > .el-submenu.is-active .el-submenu__title {
-  border-bottom: unset !important;
-  color: #{$theme} !important;
-  .svg-icon {
-    color: #{$theme} !important;
-  }
+  border-bottom: 2px solid #fff;
+  // border-bottom: unset !important;
+  // color: #{$panGreen} !important;
+  // .svg-icon {
+  //   color: #{$panGreen} !important;
+  // }
 }
 
 .topmenu-container.el-menu--horizontal {
-  border-bottom: none;
+  border-bottom: 2px solid #fff;
 }
 
 /* submenu item */

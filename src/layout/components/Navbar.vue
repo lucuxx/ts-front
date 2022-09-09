@@ -128,6 +128,9 @@ export default {
   position: relative;
   // background: #fff;
   background: #{$base-header-background};
+  // background: #324396;
+  // background: #{$theme};
+  // background-image: linear-gradient(125deg, #89e1d9 0%, #5f73d4 24%);
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
   display: flex;
   justify-content: space-between;

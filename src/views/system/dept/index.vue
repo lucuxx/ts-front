@@ -80,11 +80,11 @@
         label="机构名称"
         width="260"
       ></el-table-column>
-      <el-table-column
+      <!-- <el-table-column
         prop="deptCode"
         label="机构编码"
         width="260"
-      ></el-table-column>
+      ></el-table-column> -->
       <el-table-column
         prop="orderNum"
         label="排序"
@@ -166,14 +166,14 @@
               <el-input v-model="form.deptName" placeholder="请输入机构名称" />
             </el-form-item>
           </el-col>
-          </el-row>
+        </el-row>
         <el-row>
-          <el-col :span="12">
+          <!-- <el-col :span="12">
             <el-form-item label="机构编码" prop="deptCode">
               <el-input v-model="form.deptCode" placeholder="请输入机构编码" maxlength="10" :disabled="title == '修改机构'" />
             </el-form-item>
-          </el-col>
-          <el-col :span="12">
+          </el-col> -->
+          <el-col :span="24">
             <el-form-item label="显示排序" prop="orderNum">
               <el-input-number
                 v-model="form.orderNum"
@@ -283,9 +283,9 @@ export default {
         orderNum: [
           { required: true, message: "显示排序不能为空", trigger: "blur" },
         ],
-        deptCode: [
-          { required: true, message: "机构编码不能为空", trigger: "blur" },
-        ],
+        // deptCode: [
+        //   { required: true, message: "机构编码不能为空", trigger: "blur" },
+        // ],
         // email: [
         //   {
         //     type: "email",
@@ -341,7 +341,7 @@ export default {
         leader: undefined,
         phone: undefined,
         email: undefined,
-        deptCode: undefined,
+        // deptCode: undefined,
         status: "0",
       };
       this.resetForm("form");
