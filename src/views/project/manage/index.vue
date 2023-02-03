@@ -65,6 +65,17 @@
         >
       </el-col>
 
+      <el-col :span="1.5">
+        <el-button
+          type="warning"
+          plain
+          icon="el-icon-download"
+          size="mini"
+          @click="handleExport"
+          >导出</el-button
+        >
+      </el-col>
+
       <right-toolbar
         :showSearch.sync="showSearch"
         @queryTable="getList"
@@ -84,6 +95,7 @@
           </el-link>
         </template>
       </el-table-column>
+      <el-table-column prop="dept.deptName" label="所属机构"> </el-table-column>
       <el-table-column
         prop="status"
         label="状态"
@@ -251,6 +263,17 @@ export default {
     handleAdd() {
       this.drawer = true;
       this.mode = "ADD";
+    },
+
+    /** 导出按钮操作 */
+    handleExport() {
+      this.download(
+        "project/export",
+        {
+          ...this.queryParams,
+        },
+        `project_${new Date().getTime()}.xlsx`
+      );
     },
 
     // 查看产品详情

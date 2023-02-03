@@ -102,3 +102,9 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+.pagination-container {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+</style>

@@ -9,8 +9,8 @@
         <el-tab-pane label="项目信息" name="BasicsInfo"
           ><BasicsInfo :projectInfo="projectInfo"
         /></el-tab-pane>
-        <el-tab-pane label="成员信息" name="MqttConfig">
-          <!-- <MqttConfig :projectInfo="projectInfo" /> -->
+        <el-tab-pane label="成员信息" name="UserInfo">
+          <UserInfo :projectInfo="projectInfo" />
         </el-tab-pane>
         <!-- <el-tab-pane label="物模型" name="ModelInfo"><ModelInfo /></el-tab-pane>
         <el-tab-pane label="关联设备" name="RelationEquipment"
@@ -23,6 +23,7 @@
 
 <script>
 import BasicsInfo from "./basics-info";
+import UserInfo from "./user-info";
 import MqttConfig from "./mqtt-config";
 import ModelInfo from "./model-info";
 import RelationEquipment from "./relation-equipment";
@@ -32,6 +33,7 @@ export default {
   name: "ProjectDetail",
   components: {
     BasicsInfo,
+    UserInfo,
     //  MqttConfig, ModelInfo, RelationEquipment
   },
   data() {

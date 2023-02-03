@@ -79,7 +79,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .sidebar-enter-active {
-  transition: all 0.2s;
+  transition: all 0.3s;
 }
 
 .sidebar-enter,

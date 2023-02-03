@@ -78,7 +78,7 @@
       <el-table-column
         prop="deptName"
         label="机构名称"
-        width="260"
+        min-width="260"
       ></el-table-column>
       <!-- <el-table-column
         prop="deptCode"
@@ -88,7 +88,7 @@
       <el-table-column
         prop="orderNum"
         label="排序"
-        width="200"
+        min-width="200"
       ></el-table-column>
       <el-table-column prop="status" label="状态" width="100">
         <template slot-scope="scope">
@@ -102,7 +102,7 @@
         label="创建时间"
         align="center"
         prop="createTime"
-        width="200"
+        min-width="200"
       >
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>

@@ -124,21 +124,19 @@
       @selection-change="handleSelectionChange"
     >
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="角色编号" prop="roleId" width="120" />
+      <el-table-column label="角色编号" prop="roleId" />
       <el-table-column
         label="角色名称"
         prop="roleName"
         :show-overflow-tooltip="true"
-        width="150"
       />
       <el-table-column
         label="权限字符"
         prop="roleKey"
         :show-overflow-tooltip="true"
-        width="150"
       />
-      <el-table-column label="显示顺序" prop="roleSort" width="100" />
-      <el-table-column label="状态" align="center" width="100">
+      <el-table-column label="显示顺序" prop="roleSort" />
+      <el-table-column label="状态" align="center">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -148,12 +146,7 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column
-        label="创建时间"
-        align="center"
-        prop="createTime"
-        width="180"
-      >
+      <el-table-column label="创建时间" align="center" prop="createTime">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
@@ -161,7 +154,9 @@
       <el-table-column
         label="操作"
         align="center"
+        fixed="right"
         class-name="small-padding fixed-width"
+        width="200"
       >
         <template slot-scope="scope" v-if="scope.row.roleId !== 1">
           <el-button
@@ -216,7 +211,7 @@
     />
 
     <!-- 添加或修改角色配置对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog :title="title" :visible.sync="open" width="800px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-form-item label="角色名称" prop="roleName">
           <el-input v-model="form.roleName" placeholder="请输入角色名称" />

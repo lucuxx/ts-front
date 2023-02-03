@@ -182,25 +182,33 @@ export default {
   float: left;
   height: 60px !important;
   line-height: 60px !important;
-  color: #fafafa !important;
+  color: #e3dbdb !important;
   padding: 0 5px !important;
   margin: 10px 10px !important;
   // background: #{$base-header-background} !important;
   background: transparent !important;
+  border-bottom: unset !important;
+  user-select: none;
 }
 
 .topmenu-container.el-menu--horizontal > .el-menu-item.is-active,
 .el-menu--horizontal > .el-submenu.is-active .el-submenu__title {
-  border-bottom: 2px solid #fff;
-  // border-bottom: unset !important;
-  // color: #{$panGreen} !important;
-  // .svg-icon {
-  //   color: #{$panGreen} !important;
-  // }
+  // border-bottom: 2px solid #fff;
+  transition: all 0.14s;
+
+  border-bottom: unset !important;
+  color: #{$theme} !important;
+  font-size: 16px;
+  user-select: none;
+  .svg-icon {
+    font-size: 16px;
+    transition: all 0.14s;
+    // color: #{$theme} !important;
+  }
 }
 
 .topmenu-container.el-menu--horizontal {
-  border-bottom: 2px solid #fff;
+  border-bottom: unset !important;
 }
 
 /* submenu item */
