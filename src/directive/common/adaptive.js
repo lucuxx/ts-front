@@ -12,7 +12,7 @@ const doResize = async (el, binding, vnode) => {
   const bottomOffset = (value && value.bottomOffset) || 30
   if (!$table) return
   // 计算列表高度并设置
-  const height = window.innerHeight - el.getBoundingClientRect().top - bottomOffset
+  const height = window.innerHeight - el?.getBoundingClientRect()?.top - bottomOffset
   $table.layout.setHeight(height)
   $table.doLayout()
 }

@@ -14,7 +14,7 @@
       <div
         @click="treemenu = !treemenu"
         style="cursor: pointer; position: absolute; top: 45%; z-index: 99"
-        :style="`left:${treemenu ? '240px' : '-14px'}`"
+        :style="`left:${treemenu ? '240px' : '0px'}`"
       >
         <div class="img-wrap">
           <div class="img-top"></div>
@@ -71,6 +71,7 @@ export default {
   height: calc(100vh - 124px);
   width: 100%;
   background: #fff;
+  padding: 0;
   // border: 1px solid #dfe6ec;
   &-content {
     width: 100%;

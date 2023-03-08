@@ -32,14 +32,14 @@
         :collapse-transition="false"
         mode="vertical"
       >
-        <transition-group name="sidebar">
-          <sidebar-item
-            v-for="(route, index) in sidebarRouters"
-            :key="route.path + index"
-            :item="route"
-            :base-path="route.path"
-          />
-        </transition-group>
+        <!-- <transition-group name="sidebar"> -->
+        <sidebar-item
+          v-for="(route, index) in sidebarRouters"
+          :key="route.path + index"
+          :item="route"
+          :base-path="route.path"
+        />
+        <!-- </transition-group> -->
       </el-menu>
     </el-scrollbar>
   </div>

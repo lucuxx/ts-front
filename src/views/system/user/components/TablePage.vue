@@ -139,7 +139,7 @@
           :data="userList"
           @selection-change="handleSelectionChange"
           height="200"
-          v-adaptive="{ bottomOffset: 120 }"
+          v-adaptive="{ bottomOffset: 80 }"
         >
           <el-table-column type="selection" width="50" align="center" />
           <el-table-column

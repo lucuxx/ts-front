@@ -7,22 +7,28 @@
       :inline="true"
       v-show="showSearch"
     >
-      <el-form-item label="" prop="projectName">
+      <el-form-item label="" prop="productName">
         <el-input
-          v-model="queryParams.projectName"
-          placeholder="请输入项目名称"
+          v-model="queryParams.productName"
+          placeholder="请输入产品名称"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="" prop="deptId">
-        <treeselect
-          v-model="queryParams.deptId"
-          :options="deptOptions"
-          :show-count="false"
-          placeholder="选择所属机构"
-          style="width: 232px"
-        />
+      <el-form-item label="" prop="categoryId">
+        <el-select
+          v-model="queryParams.categoryId"
+          clearable
+          filterable
+          placeholder="请选择产品分类"
+        >
+          <el-option
+            v-for="item in categoryOptions"
+            :key="item.categoryId"
+            :value="item.categoryId"
+            :label="item.categoryName"
+          ></el-option>
+        </el-select>
       </el-form-item>
       <el-form-item label="" prop="status">
         <el-select
@@ -31,7 +37,7 @@
           placeholder="请选择状态"
         >
           <el-option
-            v-for="dict in projectStatusMap"
+            v-for="dict in productStatusMap"
             :key="dict.value"
             :value="dict.value"
             :label="dict.label"
@@ -86,21 +92,32 @@
       <template #empty>
         <el-empty></el-empty>
       </template>
-      <el-table-column prop="projectId" label="项目ID" min-width="120">
+      <el-table-column prop="productId" label="产品ID" min-width="60">
       </el-table-column>
-      <el-table-column prop="projectName" label="项目名称">
+      <el-table-column
+        prop="productName"
+        label="产品名称"
+        show-overflow-tooltip
+      >
         <template #default="{ row }">
           <el-link type="primary" :underline="false" @click="handleLook(row)">
-            {{ row.projectName }}
+            {{ row.productName }}
           </el-link>
         </template>
       </el-table-column>
-      <el-table-column prop="dept.deptName" label="所属机构"> </el-table-column>
+      <el-table-column
+        prop="category.categoryName"
+        label="产品分类"
+        show-overflow-tooltip
+      >
+      </el-table-column>
       <el-table-column
         prop="status"
         label="状态"
         :formatter="enableStateFormatter"
       >
+      </el-table-column>
+      <el-table-column prop="remark" label="备注" show-overflow-tooltip>
       </el-table-column>
 
       <el-table-column
@@ -147,29 +164,33 @@
     >
       <template #title>
         <div class="drawer-style__header">
-          {{ mode === "EDIT" ? "编辑产品" : "新建产品" }}
+          {{
+            mode === "EDIT"
+              ? "编辑产品"
+              : mode === "LOOK"
+              ? "查看产品"
+              : "新建产品"
+          }}
         </div>
       </template>
       <div class="drawer-style__content">
-        <project-detail
+        <product-detail
           v-if="drawer"
-          :projectInfo="projectInfo"
+          :productInfo="productInfo"
           :mode="mode"
           @drawerClose="drawerClose"
-        ></project-detail>
+        ></product-detail>
       </div>
     </el-drawer>
   </div>
 </template>
 
 <script>
-import Treeselect from "@riophae/vue-treeselect";
-import "@riophae/vue-treeselect/dist/vue-treeselect.css";
-import { treeselect } from "@/api/system/dept";
-import ProjectDetail from "./components/ProjectDetail.vue";
-import { listProject, delProject } from "@/api/project/manage";
+import ProductDetail from "./components/ProductDetail.vue";
+import { listProduct, delProduct } from "@/api/product/manage";
+import { listCategoryOptions } from "@/api/product/category";
 
-const projectStatusMap = [
+const productStatusMap = [
   {
     value: "0",
     label: "正常",
@@ -179,10 +200,10 @@ const projectStatusMap = [
 
 export default {
   name: "Project",
-  components: { ProjectDetail, Treeselect },
+  components: { ProductDetail },
   data() {
     return {
-      projectStatusMap,
+      productStatusMap,
       // 遮罩层
       loading: true,
       // 显示搜索条件
@@ -205,24 +226,35 @@ export default {
       queryParams: {
         pageSize: 10,
         pageNum: 1,
-        projectName: "",
+        productName: "",
         status: "",
-        deptId: null,
+        categoryId: null,
       },
       // 表单参数
-      projectInfo: {},
-      deptOptions: [],
+      productInfo: {},
+      categoryOptions: [],
     };
   },
   created() {
     this.getList();
-    this.getDeptList();
+    this.getCategory();
   },
   methods: {
+    async getCategory() {
+      try {
+        const { code, rows } = await listCategoryOptions();
+        if (code === 200) {
+          this.categoryOptions = rows;
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
     async getList() {
       try {
         this.loading = true;
-        const { code, rows, total } = await listProject(this.queryParams);
+        const { code, rows, total } = await listProduct(this.queryParams);
         if (code === 200) {
           this.datalist = rows;
           this.total = total;
@@ -231,18 +263,6 @@ export default {
         console.log(err);
       } finally {
         this.loading = false;
-      }
-    },
-
-    /** 查询机构列表 */
-    async getDeptList() {
-      try {
-        const { code, data } = await treeselect();
-        if (code === 200) {
-          this.deptOptions = data;
-        }
-      } catch (err) {
-        console.log(err);
       }
     },
 
@@ -268,19 +288,19 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       this.download(
-        "project/export",
+        "product/export",
         {
           ...this.queryParams,
         },
-        `project_${new Date().getTime()}.xlsx`
+        `product${new Date().getTime()}.xlsx`
       );
     },
 
     // 查看产品详情
     handleLook(row) {
-      this.$router.push({
-        path: `/project/manage/detail/${row.projectId}`,
-      });
+      this.drawer = true;
+      this.mode = "LOOK";
+      this.productInfo = row;
     },
 
     // 关闭弹框
@@ -298,13 +318,13 @@ export default {
     handleEdit(row) {
       this.drawer = true;
       this.mode = "EDIT";
-      this.projectInfo = row;
+      this.productInfo = row;
     },
 
     async handleDelete(row) {
       try {
         const res = await this.$confirm(
-          '是否确认删除名称为"' + row.projectName + '"的数据项？',
+          '是否确认删除名称为"' + row.productName + '"的数据项？',
           "提示",
           {
             confirmButtonText: "确定",
@@ -314,7 +334,7 @@ export default {
         );
 
         if (res === "confirm") {
-          const { code } = await delProject(row.projectId);
+          const { code } = await delProduct(row.productId);
           if (code === 200) {
             this.resetQuery();
             this.$modal.msgSuccess("删除成功");
@@ -327,7 +347,7 @@ export default {
 
     enableStateFormatter(row) {
       if (!row.status) return "--";
-      const currentType = this.projectStatusMap.filter((item) => {
+      const currentType = this.productStatusMap.filter((item) => {
         return item.value == row.status;
       });
       return currentType[0]?.label;

@@ -6,37 +6,15 @@
       size="small"
       :inline="true"
       v-show="showSearch"
+      @submit.native.prevent
     >
-      <el-form-item label="" prop="projectName">
+      <el-form-item label="" prop="categoryName">
         <el-input
-          v-model="queryParams.projectName"
-          placeholder="请输入项目名称"
+          v-model="queryParams.categoryName"
+          placeholder="请输入分类名称"
           clearable
           @keyup.enter.native="handleQuery"
         />
-      </el-form-item>
-      <el-form-item label="" prop="deptId">
-        <treeselect
-          v-model="queryParams.deptId"
-          :options="deptOptions"
-          :show-count="false"
-          placeholder="选择所属机构"
-          style="width: 232px"
-        />
-      </el-form-item>
-      <el-form-item label="" prop="status">
-        <el-select
-          v-model="queryParams.status"
-          clearable
-          placeholder="请选择状态"
-        >
-          <el-option
-            v-for="dict in projectStatusMap"
-            :key="dict.value"
-            :value="dict.value"
-            :label="dict.label"
-          ></el-option>
-        </el-select>
       </el-form-item>
 
       <el-form-item>
@@ -86,21 +64,20 @@
       <template #empty>
         <el-empty></el-empty>
       </template>
-      <el-table-column prop="projectId" label="项目ID" min-width="120">
+      <el-table-column prop="categoryId" label="分类ID" min-width="80">
       </el-table-column>
-      <el-table-column prop="projectName" label="项目名称">
+      <el-table-column
+        prop="categoryName"
+        label="分类名称"
+        show-overflow-tooltip
+      >
         <template #default="{ row }">
           <el-link type="primary" :underline="false" @click="handleLook(row)">
-            {{ row.projectName }}
+            {{ row.categoryName }}
           </el-link>
         </template>
       </el-table-column>
-      <el-table-column prop="dept.deptName" label="所属机构"> </el-table-column>
-      <el-table-column
-        prop="status"
-        label="状态"
-        :formatter="enableStateFormatter"
-      >
+      <el-table-column prop="remark" label="备注" show-overflow-tooltip>
       </el-table-column>
 
       <el-table-column
@@ -147,42 +124,36 @@
     >
       <template #title>
         <div class="drawer-style__header">
-          {{ mode === "EDIT" ? "编辑产品" : "新建产品" }}
+          {{
+            mode === "EDIT"
+              ? "编辑分类"
+              : mode === "LOOK"
+              ? "查看分类"
+              : "新建分类"
+          }}
         </div>
       </template>
       <div class="drawer-style__content">
-        <project-detail
+        <category-detail
           v-if="drawer"
-          :projectInfo="projectInfo"
+          :categoryInfo="categoryInfo"
           :mode="mode"
           @drawerClose="drawerClose"
-        ></project-detail>
+        ></category-detail>
       </div>
     </el-drawer>
   </div>
 </template>
 
 <script>
-import Treeselect from "@riophae/vue-treeselect";
-import "@riophae/vue-treeselect/dist/vue-treeselect.css";
-import { treeselect } from "@/api/system/dept";
-import ProjectDetail from "./components/ProjectDetail.vue";
-import { listProject, delProject } from "@/api/project/manage";
-
-const projectStatusMap = [
-  {
-    value: "0",
-    label: "正常",
-  },
-  { value: "1", label: "停用" },
-];
+import { listCategory, delCategory, getCategory } from "@/api/product/category";
+import CategoryDetail from "./components/CategoryDetail.vue";
 
 export default {
-  name: "Project",
-  components: { ProjectDetail, Treeselect },
+  name: "Category",
+  components: { CategoryDetail },
   data() {
     return {
-      projectStatusMap,
       // 遮罩层
       loading: true,
       // 显示搜索条件
@@ -205,24 +176,20 @@ export default {
       queryParams: {
         pageSize: 10,
         pageNum: 1,
-        projectName: "",
-        status: "",
-        deptId: null,
+        categoryName: "",
       },
       // 表单参数
-      projectInfo: {},
-      deptOptions: [],
+      categoryInfo: {},
     };
   },
   created() {
     this.getList();
-    this.getDeptList();
   },
   methods: {
     async getList() {
       try {
         this.loading = true;
-        const { code, rows, total } = await listProject(this.queryParams);
+        const { code, rows, total } = await listCategory(this.queryParams);
         if (code === 200) {
           this.datalist = rows;
           this.total = total;
@@ -231,18 +198,6 @@ export default {
         console.log(err);
       } finally {
         this.loading = false;
-      }
-    },
-
-    /** 查询机构列表 */
-    async getDeptList() {
-      try {
-        const { code, data } = await treeselect();
-        if (code === 200) {
-          this.deptOptions = data;
-        }
-      } catch (err) {
-        console.log(err);
       }
     },
 
@@ -268,19 +223,19 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       this.download(
-        "project/export",
+        "category/export",
         {
           ...this.queryParams,
         },
-        `project_${new Date().getTime()}.xlsx`
+        `category_${new Date().getTime()}.xlsx`
       );
     },
 
     // 查看产品详情
     handleLook(row) {
-      this.$router.push({
-        path: `/project/manage/detail/${row.projectId}`,
-      });
+      this.drawer = true;
+      this.mode = "LOOK";
+      this.categoryInfo = row;
     },
 
     // 关闭弹框
@@ -298,13 +253,13 @@ export default {
     handleEdit(row) {
       this.drawer = true;
       this.mode = "EDIT";
-      this.projectInfo = row;
+      this.categoryInfo = row;
     },
 
     async handleDelete(row) {
       try {
         const res = await this.$confirm(
-          '是否确认删除名称为"' + row.projectName + '"的数据项？',
+          '是否确认删除名称为"' + row.categoryName + '"的数据项？',
           "提示",
           {
             confirmButtonText: "确定",
@@ -314,7 +269,7 @@ export default {
         );
 
         if (res === "confirm") {
-          const { code } = await delProject(row.projectId);
+          const { code } = await delCategory(row.categoryId);
           if (code === 200) {
             this.resetQuery();
             this.$modal.msgSuccess("删除成功");
@@ -323,14 +278,6 @@ export default {
       } catch (err) {
         console.log(err);
       }
-    },
-
-    enableStateFormatter(row) {
-      if (!row.status) return "--";
-      const currentType = this.projectStatusMap.filter((item) => {
-        return item.value == row.status;
-      });
-      return currentType[0]?.label;
     },
   },
 };

@@ -189,7 +189,7 @@ export const dynamicRoutes = [
     permissions: ['project:detail:index'],
     children: [
       {
-        path: 'detail/:id(\\d+)',
+        path: 'manage/detail/:id(\\d+)',
         component: () => import('@/views/project/detail'),
         name: 'ProjectDetail',
         meta: { title: '项目详情', activeMenu: '/project/manage' }
