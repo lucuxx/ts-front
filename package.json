@@ -1,8 +1,8 @@
 {
-  "name": "TS",
+  "name": "TS-admin",
   "version": "1.0.0",
   "description": "TS管理系统",
-  "author": "TS-team",
+  "author": "Sky-team",
   "license": "MIT",
   "scripts": {
     "dev": "vue-cli-service serve",

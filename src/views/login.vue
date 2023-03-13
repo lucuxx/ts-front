@@ -83,7 +83,7 @@
                 >立即注册</router-link
               >
             </div>
-            <div class="footer-bar">由Lucux提供技术支持</div>
+            <div class="footer-bar">由Sky-team提供技术支持</div>
           </el-form-item>
         </el-form>
       </div>

@@ -11,7 +11,7 @@
         :key="index"
         v-if="index < visibleNumber"
       >
-        <svg-icon :icon-class="item.meta.icon" :style="{ '--theme': theme }" />
+        <svg-icon :icon-class="item.meta.icon" />
         {{ item.meta.title }}
       </el-menu-item>
     </template>
@@ -198,10 +198,10 @@ export default {
 
   border-bottom: unset !important;
   color: #{$theme} !important;
-  font-size: 16px;
+  // font-size: 16px;
   user-select: none;
   .svg-icon {
-    font-size: 16px;
+    // font-size: 16px;
     transition: all 0.14s;
     // color: #{$theme} !important;
   }
